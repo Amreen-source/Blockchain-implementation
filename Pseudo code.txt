@@ -1,0 +1,43 @@
+1. import hashlib
+2. from django.shortcuts import render, redirect
+3. from .models import *
+4. from django.http import HttpResponse
+5. from passlib.hash import pbkdf2_sha256
+6. import getpass
+7. import datetime
+8. import json
+9. from time import time
+10. class blockChain(object):
+11. def __init__(self):
+12. self.chain = []
+13. self.Agreement=[]
+14. self.new_block(previous_hash = "", proof=100)
+15. def new_block(self, proof, previous_hash=None):
+16. block = {
+a. 'index': len(self.chain) + 1,
+b. 'timespan': time(),
+c. 'transaction': self.Agreement,
+d. 'proof': proof,
+e. 'previous_hash': previous_hash or self.hash(self.chain[-1]),
+17. }
+18. self.Agreement = []
+19. self.chain.append(block)
+20. return block
+21. @property
+22. def last_block(self):
+23. return self.chain[-1]
+24. def new_transaction(self, buyyer, seller):
+25. agreementblock = {
+天津工业大学硕士学位论文
+37
+a. 'seller': seller,
+b. 'buyyer': buyyer,
+26. }
+27. self.Agreement.append(agreementblock)
+28. return self.last_block['index'] + 1
+29. def hash(self):
+30. stringBlock = json.dumps(blockChain, sort_keys=True)
+31. Strobject = stringBlock.encode()
+32. rawhash = hashlib.sha256(Strobject)
+33. hexhash = rawhash.hexdigest()
+34. return hexhash
